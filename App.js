@@ -8,7 +8,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      sections: [],      
+      sections: [],
     };
     this.messageIndex = 0;
     this.messages = [
@@ -43,37 +43,30 @@ export default class App extends React.Component {
     this.listRef = null;
   }
 
-  componentDidUpdate(props) {
-    
-  }  
-
-  componentDidMount() {    
-    this.timerHandler = setInterval(() => {      
-      if (this.messageIndex <= this.messages.length - 1) {        
+  componentDidMount() {
+    this.timerHandler = setInterval(() => {
+      if (this.messageIndex <= this.messages.length - 1) {
         const message = {
           id: this.messageIndex,
           message: this.messages[this.messageIndex],
-        };        
+        };
 
-        this.addMessage(message, () => {                
-          this.messageIndex++;          
-        });        
+        this.addMessage(message, () => {
+          this.messageIndex++;
+        });
       }
     }, 100);
   }
 
   scrollToBottom = () => {
     if (Object.keys(this.heights).length === this.messages.length) {
-      console.log('this.messageIndex', this.messageIndex);
-      console.log(Object.keys(this.heights));
-      console.log('this.messages.length',this.messages.length);
       this.listRef.scrollToLocation({
-        sectionIndex: this.messages.length -1 ,
+        sectionIndex: this.messages.length - 1,
         itemIndex: 0,
         animated: true,
       });
-    }    
-  }
+    }
+  };
 
   addMessage = (message, callback = null) => {
     const section = {
@@ -87,7 +80,7 @@ export default class App extends React.Component {
       renderItem: this.renderItem,
     };
 
-    this.setState({ sections: [...this.state.sections, section] }, () => {
+    this.setState({sections: [...this.state.sections, section]}, () => {
       if (callback) {
         callback();
       }
@@ -96,20 +89,15 @@ export default class App extends React.Component {
 
   onLayoutItem = (e, key) => {
     this.heights[key] = e.nativeEvent.layout.height;
-    console.log(this.heights);
     this.scrollToBottom();
   };
 
-  renderItem = ({ item }) => {    
+  renderItem = ({item}) => {
     return (
-      <View onLayout={e => this.onLayoutItem(e, item.key)} style={{ flex: 1 }}>
-        <Text style={listStyles.time}>
-          {item.key}
-        </Text>
+      <View onLayout={e => this.onLayoutItem(e, item.key)} style={{flex: 1}}>
+        <Text style={listStyles.time}>{item.key}</Text>
         <View style={listStyles.container}>
-          <Text style={listStyles.content}>
-            {item.message}
-          </Text>
+          <Text style={listStyles.content}>{item.message}</Text>
         </View>
       </View>
     );
@@ -144,7 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     alignItems: 'center',
     flex: 1,
-    justifyContent: 'center',    
+    justifyContent: 'center',
   },
   list: {
     flex: 1,
